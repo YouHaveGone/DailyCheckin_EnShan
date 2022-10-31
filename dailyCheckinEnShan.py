@@ -1,7 +1,9 @@
 '''
+new Env('恩山论坛签到')
+cron: 1 * * * *
 Author       : BNDou
 Date         : 2022-10-30 22:21:48
-LastEditTime : 2022-11-01 00:17:06
+LastEditTime : 2022-11-01 00:45:42
 FilePath     : \DailyCheckin_EnShan\dailyCheckinEnShan.py
 Description  : 
 '''
