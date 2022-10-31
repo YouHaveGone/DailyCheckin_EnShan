@@ -1,9 +1,9 @@
 '''
-Author: BNDou
-Date: 2022-10-30 19:17:34
-LastEditTime: 2022-10-30 20:53:09
-FilePath: \DailyCheckin_EnShan\dailyCheckinEnShan.py
-Description: Fork from leeairw/Enshan
+Author       : BNDou
+Date         : 2022-10-30 22:21:48
+LastEditTime : 2022-11-01 00:17:06
+FilePath     : \DailyCheckin_EnShan\dailyCheckinEnShan.py
+Description  : 
 '''
 
 import requests, json, time, os, sys
@@ -16,6 +16,21 @@ except:
 from lxml import etree
 
 cookie = os.environ.get("COOKIE_ENSHAN")
+
+def load_send():
+    global send
+    cur_path = os.path.abspath(os.path.dirname(__file__))
+    sys.path.append(cur_path)
+    if os.path.exists(cur_path + "/sendNotify.py"):
+        try:
+            from sendNotify import send
+        except:
+            send=False
+            print("加载通知服务失败~")
+    else:
+        send=False
+        print("加载通知服务失败~")
+load_send()
 
 def run(*arg):
     msg = ""
@@ -50,6 +65,7 @@ def run(*arg):
 
 def main(*arg):
     msg = ""
+    sendnoty='true'
     global cookie
     if "\\n" in cookie:
         clist = cookie.split("\\n")
@@ -62,6 +78,11 @@ def main(*arg):
         msg += run(cookie)
         i += 1
     print(msg[:-1])
+    if sendnoty:
+        try:
+           send('恩山论坛签到',msg)
+        except:
+            send('恩山论坛签到','错误，请查看运行日志！')
     return msg[:-1]
 
 if __name__ == "__main__":
